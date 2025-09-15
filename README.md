@@ -1,20 +1,29 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Vietnamese Food Discovery App
 
-# Run and deploy your AI Studio app
+This application helps you discover random Vietnamese dishes, view their images, and learn how to cook them.
 
-This contains everything you need to run your app locally.
+## How to Run Locally
 
-View your app in AI Studio: https://ai.studio/apps/drive/1B3kp1AZ9YtBV1CTnV87aUrHGCV0dz3Pp
+This project is designed to run directly in your browser without any build steps or local server required.
 
-## Run Locally
+1.  **Download the Files**: Make sure you have all the project files (`index.html`, `index.tsx`, `App.tsx`, etc.) in a single folder on your computer.
 
-**Prerequisites:**  Node.js
+2.  **Set Your API Key**:
+    *   Open the `index.html` file in a text editor.
+    *   Find the following script block near the bottom of the file:
+        ```html
+        <script>
+          window.process = {
+            env: {
+              API_KEY: 'YOUR_API_KEY_HERE'
+            }
+          };
+        </script>
+        ```
+    *   Replace the placeholder text `'YOUR_API_KEY_HERE'` with your actual Google AI API Key.
+    *   Save the `index.html` file.
 
+3.  **Open in Browser**:
+    *   Simply double-click the `index.html` file, or drag it into your favorite web browser (like Chrome, Firefox, or Edge).
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+That's it! The application should now be running locally.

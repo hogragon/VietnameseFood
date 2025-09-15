@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,6 +35,23 @@
 </head>
   <body class="bg-slate-900 text-slate-100">
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+
+    <!-- 
+      ========================================================================
+      IMPORTANT: SET YOUR API KEY HERE
+      ========================================================================
+      To run this application locally, replace 'YOUR_API_KEY_HERE' below with
+      your actual Google AI API key.
+      To get a key, visit https://makersuite.google.com/app/apikey
+    -->
+    <script>
+      window.process = {
+        env: {
+          API_KEY: 'YOUR_API_KEY_HERE'
+        }
+      };
+    </script>
+    
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>
