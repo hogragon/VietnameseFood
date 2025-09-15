@@ -1,12 +1,10 @@
-import { GoogleGenAI, Type } from "@google/genai";
 import type { FoodName, Recipe, MealType } from '../types';
 import { VIETNAMESE_FOOD_LIST } from '../data/foodList';
 import { VIETNAMESE_FOOD_IMAGES, DEFAULT_IMAGE_URL } from '../data/imageList';
+import { VIETNAMESE_RECIPES } from '../data/recipeList'; // Import local recipes
 
-// The API key is now expected to be set in index.html via a script tag.
-// The check is removed to allow the app to load and show a graceful error
-// in the UI if the key is missing, rather than crashing on start.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// The Gemini API client has been removed as this app now runs fully offline.
+// All data, including recipes, is sourced from local files.
 
 export const getRandomVietnameseDish = async (mealType: MealType): Promise<FoodName> => {
   try {
@@ -40,36 +38,24 @@ export const generateFoodImage = async (dishNameInEnglish: string): Promise<stri
   }
 };
 
-export const getFoodRecipe = async (dishName: string, language: string): Promise<Recipe> => {
-  const promptLanguage = language === 'en' ? 'English' : 'Vietnamese';
+// This function now retrieves recipes from a local data file instead of the Gemini API.
+export const getFoodRecipe = async (dishNameInEnglish: string, language: string): Promise<Recipe> => {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: `Provide a detailed recipe for how to cook ${dishName}. The recipe should include a list of ingredients and step-by-step cooking instructions. Format the response as a JSON object with two keys: "ingredients" (an array of strings) and "instructions" (an array of strings). Respond in ${promptLanguage}.`,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            ingredients: {
-              type: Type.ARRAY,
-              items: { type: Type.STRING },
-              description: "List of ingredients for the recipe."
-            },
-            instructions: {
-              type: Type.ARRAY,
-              items: { type: Type.STRING },
-              description: "Step-by-step cooking instructions."
-            },
-          },
-          required: ["ingredients", "instructions"],
-        },
-      },
-    });
-    const jsonString = response.text;
-    return JSON.parse(jsonString) as Recipe;
+    const recipeData = VIETNAMESE_RECIPES[dishNameInEnglish];
+
+    if (recipeData && recipeData[language as keyof typeof recipeData]) {
+      return Promise.resolve(recipeData[language as keyof typeof recipeData]);
+    } else {
+      // If no local recipe is found, return a placeholder.
+      console.warn(`No local recipe found for "${dishNameInEnglish}".`);
+      const fallbackRecipe: Recipe = {
+          ingredients: ["No local recipe available for this dish."],
+          instructions: ["Please try another dish to see a sample recipe."]
+      };
+      return Promise.resolve(fallbackRecipe);
+    }
   } catch (error) {
-    console.error("Error fetching food recipe:", error);
-    throw new Error("Failed to fetch the recipe from the API.");
+    console.error("Error fetching food recipe from local data:", error);
+    throw new Error("Failed to fetch the recipe from the local data.");
   }
 };
