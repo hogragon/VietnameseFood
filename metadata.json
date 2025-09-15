@@ -1,0 +1,5 @@
+{
+  "name": "Vietnamese Food Discovery",
+  "description": "An application to discover random Vietnamese dishes, view their images, and learn their recipes. Users can switch between English and Vietnamese languages.",
+  "requestFramePermissions": []
+}
