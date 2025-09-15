@@ -13,19 +13,15 @@ const MealTypeSwitcher: React.FC<MealTypeSwitcherProps> = ({ language, mealType,
   const texts = UI_TEXT[language];
   const mealTypes: MealType[] = ['breakfast', 'lunch', 'dinner'];
 
-  const commonButtonClasses = "px-4 py-2 text-sm sm:px-5 sm:text-base font-semibold rounded-full transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-100 focus:ring-amber-500 disabled:opacity-50 disabled:cursor-not-allowed";
-  const activeButtonClasses = "bg-amber-500 text-slate-900 shadow-md shadow-amber-500/20";
-  const inactiveButtonClasses = "bg-white text-slate-700 hover:bg-slate-200/70 border border-slate-300";
-
   return (
-    <div className="flex items-center space-x-2 bg-slate-200/80 border border-slate-300/80 p-1.5 rounded-full">
+    <div className="btn-group shadow-sm" role="group" aria-label="Meal type selector">
       {mealTypes.map((type) => (
         <button
           key={type}
+          type="button"
           onClick={() => setMealType(type)}
           disabled={disabled}
-          className={`${commonButtonClasses} ${mealType === type ? activeButtonClasses : inactiveButtonClasses}`}
-          aria-pressed={mealType === type}
+          className={`btn fw-semibold px-3 ${mealType === type ? 'btn-warning text-dark active' : 'btn-light'}`}
         >
           {texts[type]}
         </button>

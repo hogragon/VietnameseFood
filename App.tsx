@@ -68,7 +68,7 @@ const App: React.FC = () => {
   const renderContent = () => {
     if (view === View.RECIPE && currentFood) {
       return (
-        <div key="recipe-view" className="w-full animate-slide-in-up">
+        <div key="recipe-view" className="w-100 animate-slide-in-up">
           <RecipeView food={currentFood} language={language} onBack={handleBack} />
         </div>
       );
@@ -77,10 +77,10 @@ const App: React.FC = () => {
     const mainContent = isLoading ? (
       <div key="loading" className="text-center animate-fade-in-slow">
         <LoadingSpinner />
-        <p className="mt-4 text-lg font-semibold text-amber-600">{texts.loadingDish}</p>
+        <p className="mt-3 fs-5 fw-semibold text-warning-emphasis">{texts.loadingDish}</p>
       </div>
     ) : currentFood ? (
-      <div key="food-card" className="w-full animate-slide-in-up">
+      <div key="food-card" className="w-100 animate-slide-in-up">
         <FoodCard 
           food={currentFood} 
           language={language} 
@@ -89,26 +89,26 @@ const App: React.FC = () => {
         />
       </div>
     ) : (
-      <div key="welcome" className="text-center text-slate-500 text-lg md:text-xl p-8 animate-fade-in-slow">
+      <div key="welcome" className="text-center text-secondary p-5 fs-5 animate-fade-in-slow">
         <p>{texts.welcome}</p>
       </div>
     );
     
-    return <div className="flex items-center justify-center w-full">{mainContent}</div>;
+    return <div className="d-flex align-items-center justify-content-center w-100">{mainContent}</div>;
   };
 
   return (
-    <div className="min-h-[100dvh] bg-slate-100 text-slate-800 p-4 sm:p-6 lg:p-8 flex flex-col">
-      <div className="w-full max-w-5xl mx-auto flex flex-col flex-grow">
-        <header className="w-full flex justify-between items-center mb-10 sm:mb-16">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+    <div className="min-vh-100 d-flex flex-column p-3 p-md-4">
+      <div className="container-xl mx-auto d-flex flex-column flex-grow-1">
+        <header className="d-flex justify-content-between align-items-center mb-5">
+          <h1 className="fw-bolder fs-2">
             {texts.title}
           </h1>
           <LanguageSwitcher language={language} setLanguage={setLanguage} />
         </header>
 
-        <main className="w-full flex-grow flex flex-col items-center">
-          <div className="w-full max-w-lg mx-auto flex flex-col items-center space-y-10 mb-10 sm:mb-16">
+        <main className="w-100 flex-grow-1 d-flex flex-column align-items-center">
+          <div className="w-100 d-flex flex-column align-items-center gap-4 mb-5" style={{maxWidth: '512px'}}>
             <MealTypeSwitcher 
               language={language}
               mealType={mealType}
@@ -118,24 +118,24 @@ const App: React.FC = () => {
             <button
               onClick={handleFindDish}
               disabled={isLoading || isRecipeLoading}
-              className="px-10 py-5 bg-amber-500 text-slate-900 font-bold text-xl rounded-full shadow-lg shadow-amber-500/30 transform transition-all duration-300 ease-in-out hover:bg-amber-400 hover:scale-105 hover:shadow-2xl hover:shadow-amber-400/40 disabled:bg-slate-300 disabled:shadow-none disabled:text-slate-500 disabled:cursor-not-allowed disabled:scale-100"
+              className="btn btn-warning btn-lg text-dark fw-bold rounded-pill px-5 py-3 fs-5 shadow-sm"
             >
               {texts.buttonText}
             </button>
           </div>
           
           {error && (
-            <div className="w-full max-w-3xl bg-red-100 border border-red-300 text-red-800 p-4 rounded-lg mb-8 text-center animate-fade-in-slow">
+            <div className="alert alert-danger w-100 animate-fade-in-slow" role="alert" style={{maxWidth: '768px'}}>
               {error}
             </div>
           )}
 
-          <div className="w-full flex-grow flex items-start justify-center">
+          <div className="w-100 flex-grow-1 d-flex align-items-start justify-content-center">
             {renderContent()}
           </div>
         </main>
 
-        <footer className="w-full text-center text-slate-500 text-sm mt-16">
+        <footer className="w-100 text-center text-muted small mt-auto pt-5">
           <p>Powered by Local Data</p>
         </footer>
       </div>

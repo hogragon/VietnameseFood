@@ -2,24 +2,19 @@
 import React from 'react';
 
 interface LoadingSpinnerProps {
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md';
 }
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 'md' }) => {
-  const sizeClasses = {
-    sm: 'w-5 h-5 border-2',
-    md: 'w-12 h-12 border-4',
-    lg: 'w-24 h-24 border-8',
-  };
+  const sizeClass = size === 'sm' ? 'spinner-border-sm' : '';
 
   return (
-    <div className={`
-      ${sizeClasses[size]}
-      border-amber-500
-      border-t-transparent
-      rounded-full
-      animate-spin
-    `}></div>
+    <div 
+      className={`spinner-border text-warning ${sizeClass}`} 
+      role="status"
+    >
+      <span className="visually-hidden">Loading...</span>
+    </div>
   );
 };
 
